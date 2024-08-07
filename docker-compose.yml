@@ -1,0 +1,27 @@
+services:
+  db_py:
+    container_name: db_py
+    image: postgres:14.12-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: offers
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data_sql:/var/lib/postgresql/data 
+      - ./initdb:/docker-entrypoint-initdb.d
+
+
+  typesense:
+    container_name: typesense
+    image: typesense/typesense:27.0.rc28
+    environment:
+      TYPESENSE_API_KEY: "xyz"
+      TYPESENSE_DATA_DIR: /data
+    ports:
+      - "8108:8108"
+    volumes:
+      - ./typesense_data:/data
+
